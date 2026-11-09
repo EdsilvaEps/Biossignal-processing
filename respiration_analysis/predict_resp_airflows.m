@@ -1,4 +1,4 @@
-function predict_resp_airflows(folder_path)
+function [linear_model_flow, quadratic_model_flow, interaction_model_flow] = predict_resp_airflows(folder_path)
 
     % raw_spiro_path = fullfile(folder_path, "spirometer.txt");
     linear_coefficients_path = fullfile(folder_path, "regressioncoefficients1.txt");
@@ -13,13 +13,13 @@ function predict_resp_airflows(folder_path)
     quadratic_coeffs = load(quadratic_coefficients_path);
     interaction_coeffs = load(interaction_coefficients_path);
     belt_signal = load(belt_signals_path);
-    summary(belt_signal);
+    %summary(belt_signal);
 
     % separating the belt signals
     chest_signal = belt_signal(:,1);
     abdoment_signal = belt_signal(:,2);
 
-    % linear model
+    % linear model (can be done using filtlm, mdl or setwiselm instead)
     linear_model_flow = linear_coeffs(1)*chest_signal + linear_coeffs(2)*abdoment_signal; 
     summary(linear_model_flow);
 
